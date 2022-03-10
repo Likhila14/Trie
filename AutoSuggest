@@ -1,0 +1,89 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+struct Node
+{
+	bool isEOW;
+	Node* next[26];
+	Node()
+	{
+		isEOW = false;
+		for(int i=0;i<26;i++)
+		{
+			next[i] = NULL;
+		}
+	}
+};
+ 
+void insertWord(Node* root,string word)
+{
+	Node* temp = root;
+	for(auto ch:word)
+	{
+		int idx = ch - 'a';
+		if(temp->next[idx] == NULL)
+		{
+			temp->next[idx] = new Node();
+		}
+		temp = temp->next[idx];
+	}
+	temp->isEOW = true;
+}
+ 
+ char path[100];
+ int bl =0;
+ void printAllWords(Node* root,int pi)
+{
+	if(root->isEOW)
+	{
+		string word="";
+		for(int i=0;i<pi;i++)
+		{
+			word += path[i];
+		}
+		cout<<word<<" ";
+	}
+	for(int i=0;i<26;i++)
+	{
+		if(root->next[i] != NULL)
+		{
+			char ch = i + 'a';
+			path[pi] = ch;
+			printAllWords(root->next[i],pi+1);
+		}
+	}
+}
+ 
+void checkWord(Node* root, string word)
+{
+	Node* temp = root;
+ 
+	for(auto ch:word)
+	{
+		int idx = ch - 'a';
+		path[bl++] = ch;
+		if(temp->next[idx]==NULL)
+		{
+			return;
+		}
+		temp = temp->next[idx];
+	}
+	printAllWords(temp,word.size());
+}
+ 
+
+
+int main()
+{
+	Node* root = new Node();
+	insertWord(root,"app");
+	insertWord(root,"apple");
+	insertWord(root,"car");
+	insertWord(root,"cat");
+	insertWord(root,"card");
+	insertWord(root,"cards");
+    checkWord(root,"ca");
+    cout<<"\n";
+	printAllWords(root,0);
+	return 0;
+}
