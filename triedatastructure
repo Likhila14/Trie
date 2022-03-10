@@ -30,7 +30,7 @@ void insertWord(Node* root,string word)
 	temp->isEOW = true;
 }
  
-bool checkWord(Node* root, string word)
+bool isWordExists(Node* root, string word)
 {
 	Node* temp = root;
  
