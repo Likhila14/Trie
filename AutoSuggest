@@ -70,6 +70,24 @@ void checkWord(Node* root, string word)
 	}
 	printAllWords(temp,word.size());
 }
+
+
+ 
+bool isWordExists(Node* root, string word)
+{
+	Node* temp = root;
+ 
+	for(auto ch:word)
+	{
+		int idx = ch - 'a';
+		if(temp->next[idx]==NULL)
+		{
+			return false;
+		}
+		temp = temp->next[idx];
+	}
+	return temp->isEOW;
+}
  
 
 
@@ -82,8 +100,11 @@ int main()
 	insertWord(root,"cat");
 	insertWord(root,"card");
 	insertWord(root,"cards");
-    checkWord(root,"ca");
+	cout<<"enter the part of the string\n";
+	string s ;
+	cin>>s;
+    checkWord(root,s);
     cout<<"\n";
-	printAllWords(root,0);
+	//printAllWords(root,0);
 	return 0;
 }
